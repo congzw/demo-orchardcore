@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Remove="Views\Home\_ViewStart.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Views\Home\_ViewStart.cshtml">
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="OrchardCore.Module.Targets" Version="1.0.0-rc2-13450" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\NbSites.Web.ModuleB\NbSites.Web.ModuleB.csproj" />
+	</ItemGroup>
+
+</Project>
