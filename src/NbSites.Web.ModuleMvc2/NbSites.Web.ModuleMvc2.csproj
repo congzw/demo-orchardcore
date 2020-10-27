@@ -1,23 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
-	<PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+		<DocumentationFile>NbSites.Web.ModuleMvc2.xml</DocumentationFile>
+		<NoWarn>1701;1702;1591</NoWarn>
+		<OutputPath></OutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Remove="Views\Home\_ViewStart.cshtml" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Content Include="Views\Home\_ViewStart.cshtml">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
+		<None Remove="NbSites.Web.ModuleMvc2.xml" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="OrchardCore.Module.Targets" Version="1.0.0-rc2-13450" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\NbSites.Core\NbSites.Core.csproj" />
 	</ItemGroup>
 
 </Project>

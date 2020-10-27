@@ -9,6 +9,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\NbSites.ApiDoc\NbSites.ApiDoc.csproj" />
 	  <ProjectReference Include="..\NbSites.Web.ModuleA\NbSites.Web.ModuleA.csproj" />
 	  <ProjectReference Include="..\NbSites.Web.ModuleB\NbSites.Web.ModuleB.csproj" />
 	  <ProjectReference Include="..\NbSites.Web.ModuleMvc2\NbSites.Web.ModuleMvc2.csproj" />

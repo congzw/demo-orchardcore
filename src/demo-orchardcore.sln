@@ -14,9 +14,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\readme.md = ..\readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NbSites.Web.ModuleMvc", "NbSites.Web.ModuleMvc\NbSites.Web.ModuleMvc.csproj", "{1CCADE1A-12E9-4C2A-8B3C-59A7C0652469}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NbSites.Web.ModuleMvc", "NbSites.Web.ModuleMvc\NbSites.Web.ModuleMvc.csproj", "{1CCADE1A-12E9-4C2A-8B3C-59A7C0652469}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NbSites.Web.ModuleMvc2", "NbSites.Web.ModuleMvc2\NbSites.Web.ModuleMvc2.csproj", "{AB99382F-6753-4294-A9E4-253FCA32BE13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NbSites.Web.ModuleMvc2", "NbSites.Web.ModuleMvc2\NbSites.Web.ModuleMvc2.csproj", "{AB99382F-6753-4294-A9E4-253FCA32BE13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NbSites.Core", "NbSites.Core\NbSites.Core.csproj", "{EB37B5F9-24B8-44EE-8E89-03C58026B37F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{B4770611-9E1C-467B-B05E-BB117E1038F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NbSites.ApiDoc", "NbSites.ApiDoc\NbSites.ApiDoc.csproj", "{6F4DC688-5CCD-4743-BE2F-52A9B492F3E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{32765A59-3918-4C2D-8119-692829657E56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{81578A19-B5E9-467E-9639-BDF31D9DAB8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,9 +54,26 @@ Global
 		{AB99382F-6753-4294-A9E4-253FCA32BE13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB99382F-6753-4294-A9E4-253FCA32BE13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB99382F-6753-4294-A9E4-253FCA32BE13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB37B5F9-24B8-44EE-8E89-03C58026B37F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB37B5F9-24B8-44EE-8E89-03C58026B37F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB37B5F9-24B8-44EE-8E89-03C58026B37F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB37B5F9-24B8-44EE-8E89-03C58026B37F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F4DC688-5CCD-4743-BE2F-52A9B492F3E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F4DC688-5CCD-4743-BE2F-52A9B492F3E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F4DC688-5CCD-4743-BE2F-52A9B492F3E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F4DC688-5CCD-4743-BE2F-52A9B492F3E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81578A19-B5E9-467E-9639-BDF31D9DAB8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81578A19-B5E9-467E-9639-BDF31D9DAB8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81578A19-B5E9-467E-9639-BDF31D9DAB8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81578A19-B5E9-467E-9639-BDF31D9DAB8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EB37B5F9-24B8-44EE-8E89-03C58026B37F} = {32765A59-3918-4C2D-8119-692829657E56}
+		{6F4DC688-5CCD-4743-BE2F-52A9B492F3E4} = {B4770611-9E1C-467B-B05E-BB117E1038F6}
+		{81578A19-B5E9-467E-9639-BDF31D9DAB8C} = {32765A59-3918-4C2D-8119-692829657E56}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27FBA4EE-4F74-4E91-BD9C-7C13B151923A}
