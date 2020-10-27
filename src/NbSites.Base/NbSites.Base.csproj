@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<DocumentationFile>NbSites.Base.xml</DocumentationFile>
+		<NoWarn>1701;1702;1591</NoWarn>
+		<OutputPath></OutputPath>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="NbSites.Base.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="OrchardCore.Module.Targets" Version="1.0.0-rc2-13450" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.9" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Common\Common.csproj" />
+		<ProjectReference Include="..\NbSites.Core\NbSites.Core.csproj" />
+	</ItemGroup>
+
+</Project>
