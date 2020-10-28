@@ -20,8 +20,7 @@ namespace NbSites.ApiDoc
         {
             _configuration = configuration;
         }
-
-
+        
         public override void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ApiDocInfoRegistry>();

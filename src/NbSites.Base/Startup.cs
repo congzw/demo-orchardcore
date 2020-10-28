@@ -38,7 +38,6 @@ namespace NbSites.Base
         public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
         {
             base.Configure(app, routes, serviceProvider);
-            Console.WriteLine();
             //app.UseEndpoints(endpoints =>
             //        endpoints.MapGet("/Base/Hello", async context =>
             //        {
