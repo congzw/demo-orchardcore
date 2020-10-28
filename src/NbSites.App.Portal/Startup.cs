@@ -40,6 +40,14 @@ namespace NbSites.App.Portal
         {
             routes.MapAreaControllerRoute
             (
+                name: "Portal_Root",
+                areaName: "NbSites.App.Portal",
+                pattern: "",
+                defaults: new { controller = "Home", action = "Index" }
+            );
+
+            routes.MapAreaControllerRoute
+            (
                 name: "Portal_Default",
                 areaName: "NbSites.App.Portal",
                 pattern: "Portal/{controller}/{action}",

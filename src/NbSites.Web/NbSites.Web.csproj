@@ -12,10 +12,6 @@
 	  <ProjectReference Include="..\NbSites.ApiDoc\NbSites.ApiDoc.csproj" />
 	  <ProjectReference Include="..\NbSites.App.Portal\NbSites.App.Portal.csproj" />
 	  <ProjectReference Include="..\NbSites.Base\NbSites.Base.csproj" />
-	  <ProjectReference Include="..\NbSites.Web.ModuleA\NbSites.Web.ModuleA.csproj" />
-	  <ProjectReference Include="..\NbSites.Web.ModuleB\NbSites.Web.ModuleB.csproj" />
-	  <ProjectReference Include="..\NbSites.Web.ModuleMvc2\NbSites.Web.ModuleMvc2.csproj" />
-	  <ProjectReference Include="..\NbSites.Web.ModuleMvc\NbSites.Web.ModuleMvc.csproj" />
 	</ItemGroup>
 
 </Project>

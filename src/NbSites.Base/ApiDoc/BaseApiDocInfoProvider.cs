@@ -21,7 +21,6 @@ namespace NbSites.Base.ApiDoc
                 XmlFile = "NbSites.Base.xml"
             });
 
-
             apiDocInfos.Add(new ApiDocInfo()
             {
                 Name = "Base-Products",
