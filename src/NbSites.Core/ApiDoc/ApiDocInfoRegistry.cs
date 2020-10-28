@@ -5,15 +5,13 @@ namespace NbSites.Core.ApiDoc
 {
     public class ApiDocInfoRegistry
     {
-        private readonly IList<IApiDocInfoProvider> _providers;
-
         public ApiDocInfoRegistry(IEnumerable<IApiDocInfoProvider> providers)
         {
-            _providers = providers.ToList();
-            var apiDocInfos = providers.SelectMany(x => x.GetApiDocInfos()).ToList();
+            var all = providers.ToList();
+            var apiDocInfos = all.SelectMany(x => x.GetApiDocInfos()).ToList();
             ApiDocInfos = apiDocInfos;
         }
 
-        public IList<ApiDocInfo> ApiDocInfos { get; set; } 
+        public IList<ApiDocInfo> ApiDocInfos { get; set; }
     }
 }

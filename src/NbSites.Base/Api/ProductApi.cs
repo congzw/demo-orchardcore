@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using NbSites.Base.Data;
 using NbSites.Base.Data.Products;
 
 namespace NbSites.Base.Api
@@ -15,9 +17,9 @@ namespace NbSites.Base.Api
         }
 
         [HttpGet]
-        public Product GetProduct()
+        public Product GetProduct([FromServices] NbSitesDbContext dbContext)
         {
-            return null;
+            return dbContext.Products.FirstOrDefault();
         }
     }
 }

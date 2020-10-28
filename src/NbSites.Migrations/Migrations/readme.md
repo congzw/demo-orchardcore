@@ -6,7 +6,7 @@
 
 PM> Add-Migration {迁移标识} -Project {项目名称} -StartupProject {启动项目名称}  -o {迁移代码存放的目标文件夹} 
 PM> Remove-Migration -Project {项目名称} （To undo this action, use Remove-Migration）
-PM> Update-Database -Project NbSites.Base -StartupProject NbSites.Base
+PM> Update-Database -Project NbSites.Migrations
 
 ```
 
@@ -14,6 +14,6 @@ PM> Update-Database -Project NbSites.Base -StartupProject NbSites.Base
 
 ```sh
 
-Add-Migration AddProducts -o _Data/Migrations -Project NbSites.Base
-
+Add-Migration Init -Project NbSites.Migrations -StartupProject NbSites.Migrations
+Update-Database -Project NbSites.Migrations -StartupProject NbSites.Migrations
 ```

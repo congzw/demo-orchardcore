@@ -1,10 +1,15 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NbSites.Base.ApiDoc;
+using NbSites.Base.Data;
+using NbSites.Core;
 using NbSites.Core.ApiDoc;
+using NbSites.Core.DataSeed;
+using NbSites.Core.EFCore;
 using OrchardCore.Modules;
 
 namespace NbSites.Base
@@ -18,17 +23,22 @@ namespace NbSites.Base
             Configuration = configuration;
         }
 
-        public override int Order => 998;
+        public override int Order => StartupOrder.Instance.Base;
 
         public override void ConfigureServices(IServiceCollection services)
         {
+            //todo auto find
+            ModelAssemblyRegistry.Instance.AddModelConfigAssembly(this.GetType().Assembly);
             services.AddSingleton<IApiDocInfoProvider, BaseApiDocInfoProvider>();
+            services.AddScoped<ISeed, BaseSeed>();
+
+            services.AddDbContext<NbSitesDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
         {
             base.Configure(app, routes, serviceProvider);
-
+            Console.WriteLine();
             //app.UseEndpoints(endpoints =>
             //        endpoints.MapGet("/Base/Hello", async context =>
             //        {

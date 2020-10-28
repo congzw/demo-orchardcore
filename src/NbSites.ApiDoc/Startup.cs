@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NbSites.ApiDoc.Boots;
+using NbSites.Core;
 using NbSites.Core.ApiDoc;
 using OrchardCore.Modules;
 
@@ -13,7 +14,7 @@ namespace NbSites.ApiDoc
     {
         private readonly IConfiguration _configuration;
 
-        public override int Order => 1000;
+        public override int Order => StartupOrder.Instance.AfterAllModulesLoad;
         
         public Startup(IConfiguration configuration)
         {
