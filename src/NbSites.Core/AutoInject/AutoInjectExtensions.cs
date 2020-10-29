@@ -8,19 +8,21 @@ namespace NbSites.Core.AutoInject
 {
     public static class AutoInjectExtensions
     {
-        public static IList<string> AutoInject<TInterface>(this IServiceCollection services)
+        public static IList<string> AutoInject<TInterface>(this IServiceCollection services, Func<IList<Assembly>> getAssemblies = null)
         {
             var logs = new List<string>();
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.FullName.StartsWith("NbSites.")).ToList();
+            getAssemblies ??= () => AppDomain.CurrentDomain.GetAssemblies().Where(x => x.FullName != null && x.FullName.StartsWith("NbSites.")).ToList();
+
+            var assemblies = getAssemblies();
             foreach (var assembly in assemblies)
             {
-                logs.Add("AutoInject GetAssembly: " + assembly.FullName);
+                logs.Add("AutoInject Assembly: " + assembly.FullName);
                 var autoInject = services.AutoInject<TInterface>(assembly);
                 logs.AddRange(autoInject);
             }
             return logs;
         }
-
+        
         public static IList<string> AutoInject<TInterface>(this IServiceCollection services, Assembly assembly)
         {
             var logs = new List<string>();
