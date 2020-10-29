@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using NbSites.Base.Data.Products;
+using NbSites.Core.AutoInject;
 using NbSites.Core.AutoTasks;
 
 namespace NbSites.Base.Data
 {
-    public class BaseSeed : IAfterAllModulesLoadTask
+    public class BaseSeed : IAfterAllModulesLoadTask, IAutoInjectAsScoped
     {
         private readonly BaseDbContext _dbContext;
 

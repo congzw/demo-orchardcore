@@ -4,16 +4,20 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NbSites.Core.AutoInject;
 using OrchardCore.Modules;
 
 namespace NbSites.Core.AutoTasks
 {
     public class AfterAllModulesLoadStartup : StartupBase
     {
+        private readonly ILogger<AfterAllModulesLoadStartup> _logger;
         public IConfiguration Configuration { get; }
 
-        public AfterAllModulesLoadStartup(IConfiguration configuration)
+        public AfterAllModulesLoadStartup(IConfiguration configuration, ILogger<AfterAllModulesLoadStartup> logger)
         {
+            _logger = logger;
             Configuration = configuration;
         }
 
@@ -22,7 +26,12 @@ namespace NbSites.Core.AutoTasks
         public override void ConfigureServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
-            //todo auto bind
+            
+            var autoInjects = services.AutoInject<IAfterAllModulesLoadTask>();
+            foreach (var autoInject in autoInjects)
+            {
+                _logger.LogInformation(autoInject);
+            }
         }
 
         public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)

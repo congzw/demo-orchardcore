@@ -3,12 +3,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NbSites.App.Portal.ApiDoc;
 using NbSites.App.Portal.Data;
 using NbSites.Base.Data;
 using NbSites.Core;
-using NbSites.Core.ApiDoc;
-using NbSites.Core.AutoTasks;
 using NbSites.Core.EFCore;
 using OrchardCore.Modules;
 
@@ -27,12 +24,8 @@ namespace NbSites.App.Portal
 
         public override void ConfigureServices(IServiceCollection services)
         {
-            //todo auto inject
             ModelAssemblyRegistry.Instance.AddModelConfigAssembly(this.GetType().Assembly);
             services.AddScoped<PortalDbContext>(sp => new PortalDbContext(sp.GetRequiredService<BaseDbContext>()));
-
-            services.AddSingleton<IApiDocInfoProvider, PortalApiDocInfoProvider>();
-            services.AddScoped<IAfterAllModulesLoadTask, PortalSeed>();
         }
         
         public override void Configure(IApplicationBuilder builder, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)

@@ -4,11 +4,8 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NbSites.Base.ApiDoc;
 using NbSites.Base.Data;
 using NbSites.Core;
-using NbSites.Core.ApiDoc;
-using NbSites.Core.AutoTasks;
 using NbSites.Core.EFCore;
 using OrchardCore.Modules;
 
@@ -27,12 +24,7 @@ namespace NbSites.Base
 
         public override void ConfigureServices(IServiceCollection services)
         {
-            //todo auto inject
             ModelAssemblyRegistry.Instance.AddModelConfigAssembly(this.GetType().Assembly);
-            services.AddSingleton<IApiDocInfoProvider, BaseApiDocInfoProvider>();
-            services.AddScoped<IAfterAllModulesLoadTask, EnsureDbExist>();
-            services.AddScoped<IAfterAllModulesLoadTask, BaseSeed>();
-
             services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 

@@ -2,4 +2,5 @@
 
 ## change list
 
+- 20201029 add auto inject support
 - 20201026 add demo projects

@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using NbSites.ApiDoc.Boots;
 using NbSites.Core;
 using NbSites.Core.ApiDoc;
+using NbSites.Core.AutoInject;
 using OrchardCore.Modules;
 
 namespace NbSites.ApiDoc
@@ -13,16 +15,24 @@ namespace NbSites.ApiDoc
     public class Startup : StartupBase
     {
         private readonly IConfiguration _configuration;
+        private readonly ILogger<Startup> _logger;
 
         public override int Order => StartupOrder.Instance.AfterAllModulesLoad;
         
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             _configuration = configuration;
+            _logger = logger;
         }
         
         public override void ConfigureServices(IServiceCollection services)
         {
+            var apiDocInjects = services.AutoInject<IApiDocInfoProvider>();
+            foreach (var apiDocInject in apiDocInjects)
+            {
+                _logger.LogInformation(apiDocInject);
+            }
+
             services.AddSingleton<ApiDocInfoRegistry>();
             using (var scope = services.BuildServiceProvider().CreateScope())
             {

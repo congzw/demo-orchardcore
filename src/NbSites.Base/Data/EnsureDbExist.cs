@@ -1,8 +1,9 @@
-﻿using NbSites.Core.AutoTasks;
+﻿using NbSites.Core.AutoInject;
+using NbSites.Core.AutoTasks;
 
 namespace NbSites.Base.Data
 {
-    public class EnsureDbExist : IAfterAllModulesLoadTask
+    public class EnsureDbExist : IAfterAllModulesLoadTask, IAutoInjectAsScoped
     {
         private readonly BaseDbContext _dbContext;
 
