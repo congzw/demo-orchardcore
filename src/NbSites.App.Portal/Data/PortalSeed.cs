@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using NbSites.App.Portal.Data.Blogs;
-using NbSites.Base.Data;
-using NbSites.Core.DataSeed;
+using NbSites.Core.AutoTasks;
 
 namespace NbSites.App.Portal.Data
 {
@@ -26,7 +25,7 @@ namespace NbSites.App.Portal.Data
     //    }
     //}
 
-    public class PortalSeed : ISeed
+    public class PortalSeed : IAfterAllModulesLoadTask
     {
         private readonly PortalDbContext _dbContext;
 
@@ -34,8 +33,10 @@ namespace NbSites.App.Portal.Data
         {
             _dbContext = dbContext;
         }
+        public string Category { get; } = "DataSeed";
+        public int Order { get; set; }
 
-        public void Init()
+        public void Run()
         {
             var blogs = _dbContext.Blogs;
             if (!blogs.Any())

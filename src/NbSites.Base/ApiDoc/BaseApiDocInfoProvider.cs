@@ -31,7 +31,16 @@ namespace NbSites.Base.ApiDoc
                 XmlFile = "NbSites.Base.xml"
             });
 
-
+            apiDocInfos.Add(new ApiDocInfo()
+            {
+                Name = "Base-Dev",
+                Title = "基础服务接口-开发",
+                Version = "0.1",
+                Description = "开发专用，涉及到数据的敏感和危险操作",
+                Endpoint = string.Format("/swagger/{0}/swagger.json", "Base-Dev"),
+                XmlFile = "NbSites.Base.xml"
+            });
+            
             return apiDocInfos;
         }
     }

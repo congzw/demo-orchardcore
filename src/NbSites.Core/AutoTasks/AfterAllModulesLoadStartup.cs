@@ -1,18 +1,18 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NbSites.Core.DataSeed;
 using OrchardCore.Modules;
 
-namespace NbSites.Core
+namespace NbSites.Core.AutoTasks
 {
-    public class LastStartup : StartupBase
+    public class AfterAllModulesLoadStartup : StartupBase
     {
         public IConfiguration Configuration { get; }
 
-        public LastStartup(IConfiguration configuration)
+        public AfterAllModulesLoadStartup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -30,10 +30,17 @@ namespace NbSites.Core
             base.Configure(app, routes, serviceProvider);
             using (var scope = app.ApplicationServices.CreateScope())
             {
-                var seeds = scope.ServiceProvider.GetServices<ISeed>();
-                foreach (var seed in seeds)
+                var allTasks = scope.ServiceProvider
+                    .GetServices<IAfterAllModulesLoadTask>().ToList();
+
+                var allTasksGroups = allTasks.GroupBy(x => x.Category).ToList();
+                foreach (var allTasksGroup in allTasksGroups)
                 {
-                    seed.Init();
+                    var orderedTasks = allTasksGroup.OrderBy(x => x.Order).ToList();
+                    foreach (var task in orderedTasks)
+                    {
+                        task.Run();
+                    }
                 }
             }
         }

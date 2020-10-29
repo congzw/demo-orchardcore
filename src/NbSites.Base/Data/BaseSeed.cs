@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using NbSites.Base.Data.Products;
-using NbSites.Core.DataSeed;
+using NbSites.Core.AutoTasks;
 
 namespace NbSites.Base.Data
 {
-    public class BaseSeed : ISeed
+    public class BaseSeed : IAfterAllModulesLoadTask
     {
         private readonly NbSitesDbContext _dbContext;
 
@@ -13,7 +13,10 @@ namespace NbSites.Base.Data
             _dbContext = dbContext;
         }
 
-        public void Init()
+        public string Category { get; set; } = "DataSeed";
+        public int Order { get; set; }
+
+        public void Run()
         {
             if (!_dbContext.Products.Any())
             {
@@ -21,5 +24,6 @@ namespace NbSites.Base.Data
                 _dbContext.SaveChanges();
             }
         }
+
     }
 }

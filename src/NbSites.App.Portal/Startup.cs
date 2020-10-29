@@ -8,7 +8,7 @@ using NbSites.App.Portal.Data;
 using NbSites.Base.Data;
 using NbSites.Core;
 using NbSites.Core.ApiDoc;
-using NbSites.Core.DataSeed;
+using NbSites.Core.AutoTasks;
 using NbSites.Core.EFCore;
 using OrchardCore.Modules;
 
@@ -33,7 +33,7 @@ namespace NbSites.App.Portal
 
             services.AddScoped<PortalDbContext>(sp => new PortalDbContext(sp.GetRequiredService<NbSitesDbContext>()));
             services.AddSingleton<IApiDocInfoProvider, PortalApiDocInfoProvider>();
-            services.AddScoped<ISeed, PortalSeed>();
+            services.AddScoped<IAfterAllModulesLoadTask, PortalSeed>();
         }
         
         public override void Configure(IApplicationBuilder builder, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)

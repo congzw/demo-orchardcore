@@ -8,7 +8,7 @@ using NbSites.Base.ApiDoc;
 using NbSites.Base.Data;
 using NbSites.Core;
 using NbSites.Core.ApiDoc;
-using NbSites.Core.DataSeed;
+using NbSites.Core.AutoTasks;
 using NbSites.Core.EFCore;
 using OrchardCore.Modules;
 
@@ -30,7 +30,7 @@ namespace NbSites.Base
             //todo auto find
             ModelAssemblyRegistry.Instance.AddModelConfigAssembly(this.GetType().Assembly);
             services.AddSingleton<IApiDocInfoProvider, BaseApiDocInfoProvider>();
-            services.AddScoped<ISeed, BaseSeed>();
+            services.AddScoped<IAfterAllModulesLoadTask, BaseSeed>();
 
             services.AddDbContext<NbSitesDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
