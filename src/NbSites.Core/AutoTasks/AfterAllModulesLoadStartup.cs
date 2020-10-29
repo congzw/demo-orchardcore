@@ -34,9 +34,34 @@ namespace NbSites.Core.AutoTasks
                     .GetServices<IAfterAllModulesLoadTask>().ToList();
 
                 var allTasksGroups = allTasks.GroupBy(x => x.Category).ToList();
-                foreach (var allTasksGroup in allTasksGroups)
+
+                //确保数据库生成
+                var ensureDbExistGroup = allTasksGroups.FirstOrDefault(x => x.Key == "EnsureDbExist");
+                if (ensureDbExistGroup != null)
                 {
-                    var orderedTasks = allTasksGroup.OrderBy(x => x.Order).ToList();
+                    var ensureDbExists = ensureDbExistGroup.OrderBy(x => x.Order).ToList();
+                    foreach (var ensureDbExist in ensureDbExists)
+                    {
+                        ensureDbExist.Run();
+                    }
+                }
+
+                //确保数据生成
+                var dataSeedGroup = allTasksGroups.FirstOrDefault(x => x.Key == "DataSeed");
+                if (dataSeedGroup != null)
+                {
+                    var dataSeeds = dataSeedGroup.OrderBy(x => x.Order).ToList();
+                    foreach (var dataSeed in dataSeeds)
+                    {
+                        dataSeed.Run();
+                    }
+                }
+
+                //其他任务
+                var otherGroups = allTasksGroups.Where(x => x.Key != "EnsureDbExist" || x.Key != "DataSeed").ToList();
+                foreach (var otherGroup in otherGroups)
+                {
+                    var orderedTasks = otherGroup.OrderBy(x => x.Order).ToList();
                     foreach (var task in orderedTasks)
                     {
                         task.Run();

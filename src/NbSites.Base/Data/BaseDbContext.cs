@@ -4,9 +4,9 @@ using NbSites.Core.EFCore;
 
 namespace NbSites.Base.Data
 {
-    public class NbSitesDbContext : DbContext
+    public class BaseDbContext : DbContext
     {
-        public NbSitesDbContext(DbContextOptions options) : base(options)
+        public BaseDbContext(DbContextOptions options) : base(options)
         {
         }
 

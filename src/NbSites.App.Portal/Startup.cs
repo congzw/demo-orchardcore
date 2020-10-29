@@ -27,11 +27,10 @@ namespace NbSites.App.Portal
 
         public override void ConfigureServices(IServiceCollection services)
         {
-            //todo auto find and get
-            //ModelAssemblyRegistry.Instance.AddModelConfigAssembly("NbSitesDbContext", this.GetType().Assembly);
+            //todo auto inject
             ModelAssemblyRegistry.Instance.AddModelConfigAssembly(this.GetType().Assembly);
+            services.AddScoped<PortalDbContext>(sp => new PortalDbContext(sp.GetRequiredService<BaseDbContext>()));
 
-            services.AddScoped<PortalDbContext>(sp => new PortalDbContext(sp.GetRequiredService<NbSitesDbContext>()));
             services.AddSingleton<IApiDocInfoProvider, PortalApiDocInfoProvider>();
             services.AddScoped<IAfterAllModulesLoadTask, PortalSeed>();
         }

@@ -6,9 +6,9 @@ namespace NbSites.Base.Data
 {
     public class BaseSeed : IAfterAllModulesLoadTask
     {
-        private readonly NbSitesDbContext _dbContext;
+        private readonly BaseDbContext _dbContext;
 
-        public BaseSeed(NbSitesDbContext dbContext)
+        public BaseSeed(BaseDbContext dbContext)
         {
             _dbContext = dbContext;
         }

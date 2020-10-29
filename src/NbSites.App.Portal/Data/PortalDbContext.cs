@@ -6,15 +6,15 @@ namespace NbSites.App.Portal.Data
 {
     public class PortalDbContext
     {
-        public PortalDbContext(NbSitesDbContext dbContext)
+        public PortalDbContext(BaseDbContext dbContext)
         {
-            NbSitesDbContext = dbContext;
+            BaseDbContext = dbContext;
         }
 
-        public NbSitesDbContext NbSitesDbContext { get;}
+        public BaseDbContext BaseDbContext { get;}
 
-        public DbSet<Blog> Blogs => NbSitesDbContext.Set<Blog>();
-        public int SaveChanges() => NbSitesDbContext.SaveChanges();
-        public int SaveChanges(bool acceptAllChangesOnSuccess) => NbSitesDbContext.SaveChanges(acceptAllChangesOnSuccess);
+        public DbSet<Blog> Blogs => BaseDbContext.Set<Blog>();
+        public int SaveChanges() => BaseDbContext.SaveChanges();
+        public int SaveChanges(bool acceptAllChangesOnSuccess) => BaseDbContext.SaveChanges(acceptAllChangesOnSuccess);
     }
 }

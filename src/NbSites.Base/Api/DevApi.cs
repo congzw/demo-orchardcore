@@ -18,7 +18,7 @@ namespace NbSites.Base.Api
         }
 
         [HttpGet]
-        public string ResetDb([FromServices] NbSitesDbContext dbContext)
+        public string ResetDb([FromServices] BaseDbContext dbContext)
         {
             dbContext.Database.EnsureDeleted();
             dbContext.Database.EnsureCreated();

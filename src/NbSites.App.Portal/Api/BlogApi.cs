@@ -19,7 +19,7 @@ namespace NbSites.App.Portal.Api
         }
 
         [HttpGet]
-        public IList<Blog> GetBlogs([FromServices] NbSitesDbContext dbContext)
+        public IList<Blog> GetBlogs([FromServices] BaseDbContext dbContext)
         {
             return dbContext.Set<Blog>().ToList();
         }
@@ -31,9 +31,9 @@ namespace NbSites.App.Portal.Api
         }
 
         [HttpGet]
-        public string GetDbContext([FromServices] NbSitesDbContext dbContext, [FromServices] PortalDbContext dbContext2)
+        public string GetDbContext([FromServices] BaseDbContext dbContext, [FromServices] PortalDbContext dbContext2)
         {
-            return "NbSitesDbContext:" + dbContext.GetHashCode() + ", PortalDbContext:" + dbContext2.GetHashCode() + ", PortalDbContext.NbSitesDbContext:" + dbContext2.NbSitesDbContext.GetHashCode();
+            return "BaseDbContext:" + dbContext.GetHashCode() + ", PortalDbContext:" + dbContext2.GetHashCode() + ", PortalDbContext.BaseDbContext:" + dbContext2.BaseDbContext.GetHashCode();
         }
     }
 }

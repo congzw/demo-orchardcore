@@ -17,7 +17,7 @@ namespace NbSites.Base.Api
         }
 
         [HttpGet]
-        public Product GetProduct([FromServices] NbSitesDbContext dbContext)
+        public Product GetProduct([FromServices] BaseDbContext dbContext)
         {
             return dbContext.Products.FirstOrDefault();
         }

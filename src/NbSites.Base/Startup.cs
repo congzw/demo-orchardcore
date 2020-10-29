@@ -27,12 +27,13 @@ namespace NbSites.Base
 
         public override void ConfigureServices(IServiceCollection services)
         {
-            //todo auto find
+            //todo auto inject
             ModelAssemblyRegistry.Instance.AddModelConfigAssembly(this.GetType().Assembly);
             services.AddSingleton<IApiDocInfoProvider, BaseApiDocInfoProvider>();
+            services.AddScoped<IAfterAllModulesLoadTask, EnsureDbExist>();
             services.AddScoped<IAfterAllModulesLoadTask, BaseSeed>();
 
-            services.AddDbContext<NbSitesDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
