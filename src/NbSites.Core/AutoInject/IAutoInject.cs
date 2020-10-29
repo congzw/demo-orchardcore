@@ -15,4 +15,9 @@
     public interface IAutoInjectAsSingleton : IAutoInject
     {
     }
+    
+    //escape from IAutoInject auto register
+    public interface IAutoInjectIgnore
+    {
+    }
 }

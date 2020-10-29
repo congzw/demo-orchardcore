@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using NbSites.Base.Data;
+using NbSites.Core.AutoInject;
 using NbSites.Core.AutoTasks;
 
 namespace NbSites.Base.Api
@@ -34,6 +35,13 @@ namespace NbSites.Base.Api
                 dataSeedTask.Run();
             }
             return string.Join(',', dataSeedTasks.Select(x => x.GetType().Name));
+        }
+        
+        [HttpGet]
+        public IList<ClassTypeInfo> GetAutoInjects([FromServices] AutoInjectRegistry autoInjectRegistry)
+        {
+            var autoRegisterServiceCache = autoInjectRegistry.Cache;
+            return autoRegisterServiceCache.ToClassTypeInfos();
         }
     }
 }

@@ -26,12 +26,10 @@ namespace NbSites.Core.AutoTasks
         public override void ConfigureServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
-            
-            var autoInjects = services.AutoInject<IAfterAllModulesLoadTask>();
-            foreach (var autoInject in autoInjects)
-            {
-                _logger.LogInformation(autoInject);
-            }
+
+            var autoInjectRegistry = AutoInjectRegistry.Instance;
+            services.AddSingleton(autoInjectRegistry);
+            services.AutoInject(autoInjectRegistry);
         }
 
         public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)

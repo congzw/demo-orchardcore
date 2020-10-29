@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using NbSites.ApiDoc.Boots;
 using NbSites.Core;
 using NbSites.Core.ApiDoc;
-using NbSites.Core.AutoInject;
 using OrchardCore.Modules;
 
 namespace NbSites.ApiDoc
@@ -17,7 +16,7 @@ namespace NbSites.ApiDoc
         private readonly IConfiguration _configuration;
         private readonly ILogger<Startup> _logger;
 
-        public override int Order => StartupOrder.Instance.AfterAllModulesLoad;
+        public override int Order => StartupOrder.Instance.AfterAllModulesLoad + 1;
         
         public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
@@ -27,16 +26,11 @@ namespace NbSites.ApiDoc
         
         public override void ConfigureServices(IServiceCollection services)
         {
-            var apiDocInjects = services.AutoInject<IApiDocInfoProvider>();
-            foreach (var apiDocInject in apiDocInjects)
-            {
-                _logger.LogInformation(apiDocInject);
-            }
-
             services.AddSingleton<ApiDocInfoRegistry>();
             using (var scope = services.BuildServiceProvider().CreateScope())
             {
                 ApiDocInfoRegistry apiDocInfoRegistry = scope.ServiceProvider.GetRequiredService<ApiDocInfoRegistry>();
+                //AddApiDoc在注册阶段要求Build，以获取所有的文档提供者信息
                 services.AddApiDoc(apiDocInfoRegistry);
             }
         }
