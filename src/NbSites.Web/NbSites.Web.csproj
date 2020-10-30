@@ -12,6 +12,7 @@
 	  <ProjectReference Include="..\NbSites.ApiDoc\NbSites.ApiDoc.csproj" />
 	  <ProjectReference Include="..\NbSites.App.Portal\NbSites.App.Portal.csproj" />
 	  <ProjectReference Include="..\NbSites.Base\NbSites.Base.csproj" />
+	  <ProjectReference Include="..\NbSites.Jobs\NbSites.Jobs.csproj" />
 	</ItemGroup>
 
 </Project>

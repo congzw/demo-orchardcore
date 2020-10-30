@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NbSites.App.Portal", "NbSit
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrations", "Migrations", "{209091F1-3997-4E4E-8571-92064829457B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NbSites.Jobs", "NbSites.Jobs\NbSites.Jobs.csproj", "{C3050D99-EED4-474B-87BF-866AC1521D14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{B386EC71-B2BF-47D8-8E18-5935EE2EBA23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B386EC71-B2BF-47D8-8E18-5935EE2EBA23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B386EC71-B2BF-47D8-8E18-5935EE2EBA23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3050D99-EED4-474B-87BF-866AC1521D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3050D99-EED4-474B-87BF-866AC1521D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3050D99-EED4-474B-87BF-866AC1521D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3050D99-EED4-474B-87BF-866AC1521D14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{A0E2E367-846E-4E52-9473-75C0F63A7453} = {B4770611-9E1C-467B-B05E-BB117E1038F6}
 		{8B18F6E4-1747-46F0-9D3D-3AFA0BD49B65} = {209091F1-3997-4E4E-8571-92064829457B}
 		{B386EC71-B2BF-47D8-8E18-5935EE2EBA23} = {B4770611-9E1C-467B-B05E-BB117E1038F6}
+		{C3050D99-EED4-474B-87BF-866AC1521D14} = {B4770611-9E1C-467B-B05E-BB117E1038F6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27FBA4EE-4F74-4E91-BD9C-7C13B151923A}
