@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.IO;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using NbSites.Jobs.LogIt;
 
 namespace NbSites.Jobs.Api
@@ -43,6 +46,17 @@ namespace NbSites.Jobs.Api
         public RecurringLogCommand RecurringLog([FromServices] RecurringLogCommand cmd)
         {
             cmd.Args = "Hello Recurring Call";
+            cmd.Enqueue();
+            return cmd;
+        }
+
+        [HttpGet]
+        public ShellCallCommand ShellCall([FromServices] IHostEnvironment env)
+        {
+            var cmd = new ShellCallCommand
+            {
+                Args = new BackupDbBatFile {FilePath = Path.Combine(env.ContentRootPath, "backup_database.bat")}
+            };
             cmd.Enqueue();
             return cmd;
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
+// ReSharper disable once CheckNamespace
 namespace NbSites.Jobs.LogIt
 {
     public class LogCommandHelper
