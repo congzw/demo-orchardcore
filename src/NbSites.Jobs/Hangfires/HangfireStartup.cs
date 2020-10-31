@@ -24,15 +24,10 @@ namespace NbSites.Jobs.Hangfires
 
         public override void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<DelayCallCommand>();
+
             LogCommandHelper.Instance.LogToFile = true;
             services.AddMyHangfire(Configuration);
-
-            ////this way is not working in orchard module! => use this: UseHangfireServer
-            //// Add the processing server as IHostedService
-            //services.AddHangfireServer(opt =>
-            //{
-            //    opt.ServerName = "LightHangfireServer";
-            //});
         }
 
         public override void Configure(IApplicationBuilder builder, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)

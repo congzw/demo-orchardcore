@@ -21,8 +21,8 @@ namespace NbSites.Core.Data
             var config = new MyDatabaseConfig();
             config.Tenant = tenant;
             config.ConnectionString = connString;
-            config.DataProvider = connectionName;
-            config.ConnectionName = dataProvider;
+            config.DataProvider = dataProvider;
+            config.ConnectionName = connectionName;
             return config;
         }
     }
@@ -30,18 +30,9 @@ namespace NbSites.Core.Data
     public class MyDatabaseConst
     {
         public const string DataProvider = "DatabaseProvider";
-        public const string DbCreated = "DbCreated";
     }
-
-    public interface IMyDatabaseHelper
-    {
-        string Tenant { get; }
-        MyDatabaseConfig GetMyTenantConnectionConfig(string connName);
-        Task InitConfig(MyDatabaseConfig config);
-        Task EnsureCreateDatabase(DbContext context);
-    }
-
-    public class MyDatabaseHelper : IMyDatabaseHelper
+    
+    public class MyDatabaseHelper
     {
         private readonly ShellSettings _shellSettings;
         private readonly IShellSettingsManager _shellSettingsManager;
@@ -89,16 +80,16 @@ namespace NbSites.Core.Data
             return _shellSettingsManager.SaveSettingsAsync(_shellSettings);
         }
         
-        public Task EnsureCreateDatabase(DbContext context)
+        public Task EnsureCreateDatabase(DbContext context, string databaseName)
         {
-            var dbCreated = _shellSettings.ShellConfiguration.GetValue<bool>(MyDatabaseConst.DbCreated);
-            if (!dbCreated)
+            var dbCreated = _shellSettings.ShellConfiguration.GetValue<bool>(databaseName + "Created");
+            if (dbCreated)
             {
                 return Task.CompletedTask;
             }
 
             context.Database.EnsureCreated();
-            _shellSettings.ShellConfiguration[MyDatabaseConst.DbCreated] = true.ToString();
+            _shellSettings.ShellConfiguration[databaseName + "Created"] = true.ToString();
             return _shellSettingsManager.SaveSettingsAsync(_shellSettings);
         }
     }

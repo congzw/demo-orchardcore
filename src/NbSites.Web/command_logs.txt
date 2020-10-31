@@ -1,0 +1,12 @@
+NbSites.Jobs.LogIt.AsyncLogCommand => 2020-10-31 17:23:59 with args Hello Async Call
+NbSites.Jobs.LogIt.DelayCallCommand => 2020-10-31 17:26:42 with args Hello Delay Async Call
+NbSites.Jobs.LogIt.DelayCallCommand => 2020-10-31 17:27:27 with args Hello Delay Async Call
+NbSites.Jobs.LogIt.SyncLogCommand => 2020-10-31 17:45:23 with args Hello Sync CallDefault
+NbSites.Jobs.LogIt.SyncLogCommand => 2020-10-31 17:51:36 with args Hello Sync CallDefault
+NbSites.Jobs.LogIt.DelayCallCommand => 2020-10-31 17:43:54 with args Hello Delay Async Call: Default ProcessedBy T01
+NbSites.Jobs.LogIt.DelayCallCommand => 2020-10-31 17:44:39 with args Hello Delay Async Call: T01 ProcessedBy T01
+NbSites.Jobs.LogIt.DelayCallCommand => 2020-10-31 17:45:24 with args Hello Delay Async Call: T01 ProcessedBy  T01
+NbSites.Jobs.LogIt.DelayCallCommand => 2020-10-31 17:52:06 with args Hello Delay Async Call: Default ProcessedBy Default
+NbSites.Jobs.LogIt.DelayCallCommand => 2020-10-31 17:52:51 with args Hello Delay Async Call: T01 ProcessedBy Default
+NbSites.Jobs.LogIt.DelayCallCommand => 2020-10-31 18:03:09 with args Hello Delay Async Call: Default ProcessedBy Default
+NbSites.Jobs.LogIt.DelayCallCommand => 2020-10-31 18:03:39 with args Hello Delay Async Call: T01 ProcessedBy Default

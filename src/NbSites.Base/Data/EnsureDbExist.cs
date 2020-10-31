@@ -1,23 +1,23 @@
-﻿using NbSites.Core.AutoInject;
-using NbSites.Core.AutoTasks;
+﻿//using NbSites.Core.AutoInject;
+//using NbSites.Core.AutoTasks;
 
-namespace NbSites.Base.Data
-{
-    public class EnsureDbExist : IAfterAllModulesLoadTask, IAutoInjectAsScoped
-    {
-        private readonly BaseDbContext _dbContext;
+//namespace NbSites.Base.Data
+//{
+//    public class EnsureDbExist : IAfterAllModulesLoadTask, IAutoInjectAsScoped
+//    {
+//        private readonly BaseDbContext _dbContext;
 
-        public EnsureDbExist(BaseDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+//        public EnsureDbExist(BaseDbContext dbContext)
+//        {
+//            _dbContext = dbContext;
+//        }
 
-        public void Run()
-        {
-            _dbContext.Database.EnsureCreated();
-        }
+//        public void Run()
+//        {
+//            _dbContext.Database.EnsureCreated();
+//        }
 
-        public string Category { get; set; } = "EnsureDbExist";
-        public int Order { get; set; }
-    }
-}
+//        public string Category { get; set; } = "EnsureDbExist";
+//        public int Order { get; set; }
+//    }
+//}

@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NbSites.Base.Data;
 using NbSites.Core;
+using NbSites.Core.Context;
 using NbSites.Core.Data;
 using NbSites.Core.EFCore;
 using OrchardCore.Modules;
@@ -27,12 +28,13 @@ namespace NbSites.Base
 
         public override void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IMyDatabaseHelper, MyDatabaseHelper>();
+            services.AddTransient<TenantContext>();
+            services.AddTransient<MyDatabaseHelper>();
             ModelAssemblyRegistry.Instance.AddModelConfigAssembly(this.GetType().Assembly);
 
             services.AddDbContext<BaseDbContext>(async (sp, options) =>
             {
-                var myDatabaseHelper = sp.GetRequiredService<IMyDatabaseHelper>();
+                var myDatabaseHelper = sp.GetRequiredService<MyDatabaseHelper>();
                 var config = myDatabaseHelper.GetMyTenantConnectionConfig("DefaultConnection");
                 if (config == null)
                 {
@@ -74,8 +76,8 @@ namespace NbSites.Base
                     return;
                 }
 
-                var myDatabaseHelper = serviceScope.ServiceProvider.GetService<IMyDatabaseHelper>();
-                myDatabaseHelper.EnsureCreateDatabase(context);
+                var myDatabaseHelper = serviceScope.ServiceProvider.GetService<MyDatabaseHelper>();
+                myDatabaseHelper.EnsureCreateDatabase(context, "DemoDb");
             }
         }
     }

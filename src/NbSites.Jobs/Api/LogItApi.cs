@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using NbSites.Core.Context;
 using NbSites.Jobs.LogIt;
 
 namespace NbSites.Jobs.Api
@@ -11,6 +11,13 @@ namespace NbSites.Jobs.Api
     [ApiController]
     public class LogItApi : ControllerBase
     {
+        private readonly TenantContext _tenantContext;
+
+        public LogItApi(TenantContext tenantContext)
+        {
+            _tenantContext = tenantContext;
+        }
+
         [HttpGet]
         public string GetInfo()
         {
@@ -28,7 +35,7 @@ namespace NbSites.Jobs.Api
         [HttpGet]
         public SyncLogCommand SyncLog([FromServices] SyncLogCommand cmd)
         {
-            cmd.Args = "Hello Sync Call";
+            cmd.Args = "Hello Sync Call" + _tenantContext.Tenant;
             cmd.Enqueue();
             return cmd;
         }
@@ -36,8 +43,8 @@ namespace NbSites.Jobs.Api
         [HttpGet]
         public DelayCallCommand DelayCall()
         {
-            var cmd = new DelayCallCommand();
-            cmd.Args = "Hello Delay Async Call";
+            var cmd = new DelayCallCommand(_tenantContext);
+            cmd.Args = "Hello Delay Async Call: " + _tenantContext.Tenant;
             cmd.Enqueue();
             return cmd;
         }
@@ -45,7 +52,7 @@ namespace NbSites.Jobs.Api
         [HttpGet]
         public RecurringLogCommand RecurringLog([FromServices] RecurringLogCommand cmd)
         {
-            cmd.Args = "Hello Recurring Call";
+            cmd.Args = "Hello Recurring Call" + _tenantContext.Tenant;
             cmd.Enqueue();
             return cmd;
         }
