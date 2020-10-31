@@ -15,4 +15,8 @@
 	  <ProjectReference Include="..\NbSites.Jobs\NbSites.Jobs.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="App_Data\Sites\" />
+	</ItemGroup>
+
 </Project>

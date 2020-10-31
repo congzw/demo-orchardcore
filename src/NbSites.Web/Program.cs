@@ -12,6 +12,11 @@ namespace NbSites.Web
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                //.ConfigureAppConfiguration(builder =>
+                //{
+                //    builder.AddJsonFile("config/tenants.json");
+                //    builder.AddJsonFile(".config/appsettings.json", true, true);
+                //})
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
