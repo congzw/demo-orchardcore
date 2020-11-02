@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Transactions;
+using Common;
 using Hangfire;
+using Hangfire.MySql;
 using Hangfire.SqlServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,18 +15,17 @@ namespace NbSites.Jobs.Hangfires
         {
             //ensure the hangfireDb exist
             var dbConn = config.GetConnectionString("HangfireConnection");
-            using (var hangfireDbContext = new HangfireDbContext(dbConn))
+            var dataProvider = config["DataProvider"];
+            var dbContextHelper = DbContextHelper.Instance;
+
+            var provider = dbContextHelper.AutoFixProvider(dataProvider);
+            dbContextHelper.EnsureEmptyDb(dbConn, dataProvider);
+            
+            services.AddHangfire(gc =>
             {
-                hangfireDbContext.Database.EnsureCreated();
-            }
-
-            services.AddHangfire(gc => gc
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
-                .UseColouredConsoleLogProvider()
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .ConfigSqlServer(dbConn));
-
+                gc.ConfigHangfireStorage(dbConn, provider);
+            });
+            
             ////多租户有些问题，分发和处理不同源，会不会是问题，有无必要考虑多租户？
             //services.AddHangfire((sp, gc) =>
             //{
@@ -46,6 +48,28 @@ namespace NbSites.Jobs.Hangfires
             //});
         }
 
+        internal static IGlobalConfiguration ConfigHangfireStorage(this IGlobalConfiguration gc, string dbConn, string theProvider)
+        {
+            var hangfireConfig = gc
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseColouredConsoleLogProvider()
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings();
+
+            if (theProvider.Equals("SqlServer", StringComparison.OrdinalIgnoreCase))
+            {
+                hangfireConfig.ConfigSqlServer(dbConn);
+                return gc;
+            }
+            if (theProvider.Equals("MySql", StringComparison.OrdinalIgnoreCase))
+            {
+                hangfireConfig.ConfigMySql(dbConn);
+                return gc;
+            }
+
+            throw new NotSupportedException("不支持的数据库类型: " + theProvider);
+        }
+
         internal static IGlobalConfiguration ConfigSqlServer(this IGlobalConfiguration configuration, string dbConn)
         {
             configuration.UseSqlServerStorage(dbConn, new SqlServerStorageOptions
@@ -57,6 +81,23 @@ namespace NbSites.Jobs.Hangfires
                 DisableGlobalLocks = true
             });
 
+            return configuration;
+        }
+
+        internal static IGlobalConfiguration ConfigMySql(this IGlobalConfiguration configuration, string dbConn)
+        {
+            configuration.UseStorage(new MySqlStorage(
+                dbConn, new MySqlStorageOptions
+                {
+                    TransactionIsolationLevel = IsolationLevel.ReadCommitted,
+                    QueuePollInterval = TimeSpan.FromSeconds(15),
+                    JobExpirationCheckInterval = TimeSpan.FromHours(1),
+                    CountersAggregateInterval = TimeSpan.FromMinutes(5),
+                    PrepareSchemaIfNecessary = true,
+                    DashboardJobListLimit = 50000,
+                    TransactionTimeout = TimeSpan.FromMinutes(1),
+                    TablesPrefix = "Hangfire"
+                }));
             return configuration;
         }
     }

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Threading.Tasks;
+using Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using NbSites.Base.Data;
 using NbSites.Core;
 using NbSites.Core.Context;
@@ -29,24 +27,51 @@ namespace NbSites.Base
         public override void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<TenantContext>();
-            services.AddTransient<MyDatabaseHelper>();
+            services.AddSingleton<DbConnConfigCache>();
+            services.AddTransient<DbConnConfigHelper>();
+            services.AddTransient<IDbConnConfigHelper, DbConnConfigHelper>();
+
+
             ModelAssemblyRegistry.Instance.AddModelConfigAssembly(this.GetType().Assembly);
 
-            services.AddDbContext<BaseDbContext>(async (sp, options) =>
+            services.AddDbContext<BaseDbContext>(async (sp, optionsBuilder) =>
             {
-                var myDatabaseHelper = sp.GetRequiredService<MyDatabaseHelper>();
-                var config = myDatabaseHelper.GetMyTenantConnectionConfig("DefaultConnection");
+                var dbContextHelper = sp.GetRequiredService<DbContextHelper>();
+                var dataProvider = dbContextHelper.GetDataProviderFromConfiguration(Configuration);
+                var fixProvider = dbContextHelper.AutoFixProvider(dataProvider);
+                
+                var connName = "DefaultConnection";
+                var databaseName = "DemoDb";
+                //template for non tenant
+                var dbConn = Configuration.GetConnectionString(connName);
+                
+                var myDatabaseHelper = sp.GetRequiredService<DbConnConfigHelper>();
+                var config = myDatabaseHelper.GetDbConnConfig(connName, dataProvider);
                 if (config == null)
                 {
+                    //create tenant Conn from "non tenant" template Conn
+                    //eg => replace DemoDb with DemoDb_{tenant}
                     var tenant = myDatabaseHelper.Tenant;
-                    config = MyDatabaseConfig.Create(
-                        connectionName:"DefaultConnection", 
-                        dataProvider:"SqlServer", 
-                        tenant:tenant, 
-                        connString: $"Server=(localdb)\\MSSQLLocalDB; Database=DemoDb_{tenant}; Trusted_Connection=True; MultipleActiveResultSets=true");
-                    await myDatabaseHelper.InitConfig(config);
+                    var dbConnTenant = dbConn.Replace(databaseName, $"{databaseName}_{tenant}", StringComparison.OrdinalIgnoreCase);
+                    config = DbConnConfig.Create(
+                        connectionName: connName,
+                        dataProvider: fixProvider,
+                        connString: dbConnTenant);
+
+                    dbContextHelper.SetupDbContextOptionsBuilder(optionsBuilder, fixProvider, dbConnTenant);
+                    await using (var baseDbContext = new BaseDbContext(optionsBuilder.Options))
+                    {
+                        await myDatabaseHelper.SaveDbConnConfig(config);
+                        var canConnect = await baseDbContext.Database.CanConnectAsync();
+                        if (!canConnect)
+                        {
+                            await baseDbContext.Database.EnsureCreatedAsync();
+                        }
+                        await myDatabaseHelper.SaveDatabaseCreated(databaseName, true);
+                    }
                 }
-                options.UseSqlServer(config.ConnectionString);
+
+                dbContextHelper.SetupDbContextOptionsBuilder(optionsBuilder, config.DataProvider, config.ConnectionString);
             });
         }
 
@@ -60,25 +85,25 @@ namespace NbSites.Base
             //            await context.Response.WriteAsync("Hello from Module Base!");
             //        }));
 
-            UseDatabase(app);
+            //UseDatabase(app);
         }
 
-        private static void UseDatabase(IApplicationBuilder applicationBuilder)
-        {
-            var serviceScopeFactory = applicationBuilder.ApplicationServices.GetService<IServiceScopeFactory>();
-            using (var serviceScope = serviceScopeFactory.CreateScope())
-            {
-                var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<BaseDbContext>>();
-                var context = serviceScope.ServiceProvider.GetService<BaseDbContext>();
-                if (context == null)
-                {
-                    logger.LogWarning("无法正常初始化数据库,可能是租户首次加载");
-                    return;
-                }
+        //private static void UseDatabase(IApplicationBuilder applicationBuilder)
+        //{
+        //    var serviceScopeFactory = applicationBuilder.ApplicationServices.GetService<IServiceScopeFactory>();
+        //    using (var serviceScope = serviceScopeFactory.CreateScope())
+        //    {
+        //        var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<BaseDbContext>>();
+        //        var context = serviceScope.ServiceProvider.GetService<AutoCreateDbContext>();
+        //        if (context == null)
+        //        {
+        //            logger.LogWarning("无法正常初始化数据库,可能是租户首次加载");
+        //            return;
+        //        }
 
-                var myDatabaseHelper = serviceScope.ServiceProvider.GetService<MyDatabaseHelper>();
-                myDatabaseHelper.EnsureCreateDatabase(context, "DemoDb");
-            }
-        }
+        //        var myDatabaseHelper = serviceScope.ServiceProvider.GetService<MyDatabaseHelper>();
+        //        myDatabaseHelper.EnsureCreateDatabase(context, "DemoDb");
+        //    }
+        //}
     }
 }

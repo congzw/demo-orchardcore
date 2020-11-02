@@ -9,8 +9,8 @@ namespace NbSites.Web
     {
         public void ConfigureServices(IServiceCollection services)
         {
-           //services.AddOrchardCore().AddMvc();
-           services.AddOrchardCore().WithTenants().AddMvc();
+            //services.AddOrchardCore().WithTenants().AddMvc(); //启动租户
+            services.AddOrchardCore().AddMvc(); //不启动租户
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

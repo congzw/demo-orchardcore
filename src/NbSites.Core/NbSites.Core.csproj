@@ -13,4 +13,8 @@
 		<PackageReference Include="Hangfire.Core" Version="1.7.16" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Common\Common.csproj" />
+	</ItemGroup>
+
 </Project>
