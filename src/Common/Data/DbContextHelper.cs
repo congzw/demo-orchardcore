@@ -2,9 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
-namespace Common
+namespace Common.Data
 {
     public class DbContextSetupAction
     {
@@ -43,7 +42,9 @@ namespace Common
             }
             throw new NotSupportedException("不支持的数据库类型: " + provider);
         }
-        
+
+        #region old
+
         //public DbContextOptionsBuilder SetupDbContextOptionsBuilder(DbContextOptionsBuilder optionsBuilder, string provider, string dbConn)
         //{
         //    var fixProvider = AutoFixProvider(provider);
@@ -65,6 +66,8 @@ namespace Common
         //    throw new NotSupportedException("不支持的数据库类型: " + provider);
         //}
 
+        #endregion
+
         public void EnsureEmptyDb(string dbConn, string dataProvider)
         {
             var provider = AutoFixProvider(dataProvider);
@@ -83,31 +86,6 @@ namespace Common
         }
 
         public static DbContextHelper Instance = new DbContextHelper();
-    }
-
-    public static class DbContextHelperExtensions
-    {
-        public static string GetDataProviderFromConfiguration(this DbContextHelper helper, IConfiguration configuration)
-        {
-            //template for non tenant
-            var dataProvider = configuration["DataProvider"];
-            var fixProvider = helper.AutoFixProvider(dataProvider);
-            return fixProvider;
-        }
-
-        public static DbContextHelper AddSupportSqlServer(this DbContextHelper helper, Action<DbContextOptionsBuilder, string> setupAction = null)
-        {
-            setupAction ??= (builder, connString) => { builder.UseSqlServer(connString); };
-            helper.AddSupport(DbContextSetupAction.Create("SqlServer", setupAction));
-            return helper;
-        }
-
-        public static DbContextHelper AddSupportMySql(this DbContextHelper helper, Action<DbContextOptionsBuilder, string> setupAction = null)
-        {
-            setupAction ??= (builder, connString) => { builder.UseMySQL(connString); };
-            helper.AddSupport(DbContextSetupAction.Create("MySql", setupAction));
-            return helper;
-        }
     }
 
     internal class AutoCreateEmptyDbContext : DbContext

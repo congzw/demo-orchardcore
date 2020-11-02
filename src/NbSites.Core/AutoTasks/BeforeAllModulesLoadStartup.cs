@@ -1,4 +1,5 @@
 ﻿using Common;
+using Common.Data;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.Modules;
 
