@@ -22,8 +22,8 @@ namespace NbSites.Core
             Orders.Add("NbSites.ApiDoc.Startup", StartupOrder.Instance.AfterAllModulesLoad + 1);
             Orders.Add("NbSites.Core.AutoTasks.AfterAllModulesLoadStartup", StartupOrder.Instance.AfterAllModulesLoad);
             Orders.Add("NbSites.Base.Startup", StartupOrder.Instance.Base);
-            Orders.Add("NbSites.Jobs.Startup", -100);
-            Orders.Add("NbSites.Core.Startup", -200);
+            Orders.Add("NbSites.Jobs.Startup", StartupOrder.Instance.BaseMin - 100);
+            Orders.Add("NbSites.Core.Startup", StartupOrder.Instance.Core);
             //extension: read from config set Orders before use
         }
 

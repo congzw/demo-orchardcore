@@ -24,16 +24,17 @@ namespace NbSites.Jobs.Hangfires
         {
             base.ConfigureServices(services);
 
-            services.AddTransient<DelayCallCommand>();
             LogCommandHelper.Instance.LogToFile = true;
             services.AddMyHangfire(Configuration);
+
+            services.AddTransient<DelayCallCommand>();
         }
 
         public override void Configure(IApplicationBuilder builder, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
         {
             builder.UseHangfireServer(new BackgroundJobServerOptions()
             {
-                ServerName = "LightHangfireServer"
+                ServerName = "HangfireServer"
             });
 
             builder.UseEndpoints(endpoints =>

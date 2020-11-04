@@ -1,12 +1,11 @@
 ﻿using System;
 using Common.Data;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using NbSites.Base.AppService.Dev;
 using NbSites.Base.Data;
 using NbSites.Core;
-using NbSites.Core.Context;
 using NbSites.Core.Data;
 using NbSites.Core.EFCore;
 
@@ -24,15 +23,11 @@ namespace NbSites.Base
         public override void ConfigureServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
-
-            services.AddTransient<TenantContext>();
-            services.AddSingleton<DbConnConfigCache>();
-            services.AddTransient<DbConnConfigHelper>();
-            services.AddTransient<IDbConnConfigHelper, DbConnConfigHelper>();
-
+            
+            services.AddOptions<DevSetting>().Bind(Configuration.GetSection("DevSetting"));
+            services.AddScoped(sp => sp.GetService<IOptionsSnapshot<DevSetting>>().Value);
 
             ModelAssemblyRegistry.Instance.AddModelConfigAssembly(this.GetType().Assembly);
-
             services.AddDbContext<BaseDbContext>(async (sp, optionsBuilder) =>
             {
                 var dbContextHelper = sp.GetRequiredService<DbContextHelper>();
@@ -74,35 +69,9 @@ namespace NbSites.Base
             });
         }
 
-        public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
-        {
-            base.Configure(app, routes, serviceProvider);
-
-            //app.UseEndpoints(endpoints =>
-            //        endpoints.MapGet("/Base/Hello", async context =>
-            //        {
-            //            await context.Response.WriteAsync("Hello from Module Base!");
-            //        }));
-
-            //UseDatabase(app);
-        }
-
-        //private static void UseDatabase(IApplicationBuilder applicationBuilder)
+        //public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
         //{
-        //    var serviceScopeFactory = applicationBuilder.ApplicationServices.GetService<IServiceScopeFactory>();
-        //    using (var serviceScope = serviceScopeFactory.CreateScope())
-        //    {
-        //        var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<BaseDbContext>>();
-        //        var context = serviceScope.ServiceProvider.GetService<AutoCreateDbContext>();
-        //        if (context == null)
-        //        {
-        //            logger.LogWarning("无法正常初始化数据库,可能是租户首次加载");
-        //            return;
-        //        }
-
-        //        var myDatabaseHelper = serviceScope.ServiceProvider.GetService<MyDatabaseHelper>();
-        //        myDatabaseHelper.EnsureCreateDatabase(context, "DemoDb");
-        //    }
+        //    base.Configure(app, routes, serviceProvider);
         //}
     }
 }

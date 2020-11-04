@@ -2,26 +2,32 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using NbSites.Core.Context;
-using NbSites.Core.Data;
+using OrchardCore.Modules;
 
 namespace NbSites.Core
 {
-    public class Startup : MyStartupBase
+    public abstract class MyStartupBase : StartupBase
     {
+        public override int Order => this.TryGetOrderForBase();
+
+        public override int ConfigureOrder => this.TryGetConfigureOrderForBase();
+
         public override void ConfigureServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
-
-            services.AddTransient<TenantContext>();
-            services.AddSingleton<DbConnConfigCache>();
-            services.AddTransient<DbConnConfigHelper>();
-            services.AddTransient<IDbConnConfigHelper, DbConnConfigHelper>();
+            this.LogConfigServices();
         }
 
         public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
         {
             base.Configure(app, routes, serviceProvider);
+            this.LogConfigure();
         }
+    }
+
+    public abstract class MyAppStartupBase : MyStartupBase
+    {
+        public override int Order => this.TryGetOrderForApp();
+        public override int ConfigureOrder => this.TryGetConfigureOrderForApp();
     }
 }

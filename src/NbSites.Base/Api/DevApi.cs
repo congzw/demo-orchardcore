@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using NbSites.Base.AppService.Dev;
 using NbSites.Base.Data;
 using NbSites.Core;
 using NbSites.Core.AutoInject;
@@ -24,8 +25,13 @@ namespace NbSites.Base.Api
         }
 
         [HttpGet]
-        public string ResetDb([FromServices] BaseDbContext dbContext)
+        public string ResetDb([FromServices] BaseDbContext dbContext, [FromServices] DevSetting devSetting)
         {
+            if (!devSetting.AllowedResetDatabase)
+            {
+                return "NotAllowedResetDatable!";
+            }
+
             dbContext.Database.EnsureDeleted();
             dbContext.Database.EnsureCreated();
             return "Reset OK";
