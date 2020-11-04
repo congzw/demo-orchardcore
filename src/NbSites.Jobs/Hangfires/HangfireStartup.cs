@@ -4,14 +4,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NbSites.Core;
 using NbSites.Jobs.LogIt;
-using OrchardCore.Modules;
 
 namespace NbSites.Jobs.Hangfires
 {
     //feature?
     //[Feature(JobsConstants.Features.Hangfire)]
-    public class HangfireStartup : StartupBase
+    public class HangfireStartup : MyStartupBase
     {
         public IConfiguration Configuration { get; }
 
@@ -20,12 +20,11 @@ namespace NbSites.Jobs.Hangfires
             Configuration = configuration;
         }
 
-        public override int Order => -1;
-
         public override void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<DelayCallCommand>();
+            base.ConfigureServices(services);
 
+            services.AddTransient<DelayCallCommand>();
             LogCommandHelper.Instance.LogToFile = true;
             services.AddMyHangfire(Configuration);
         }

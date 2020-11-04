@@ -1,5 +1,4 @@
 ﻿using System;
-using Common;
 using Common.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
@@ -10,11 +9,10 @@ using NbSites.Core;
 using NbSites.Core.Context;
 using NbSites.Core.Data;
 using NbSites.Core.EFCore;
-using OrchardCore.Modules;
 
 namespace NbSites.Base
 {
-    public class Startup : StartupBase
+    public class Startup : MyStartupBase
     {
         public IConfiguration Configuration { get; }
 
@@ -23,10 +21,10 @@ namespace NbSites.Base
             Configuration = configuration;
         }
 
-        public override int Order => StartupOrder.Instance.Base;
-
         public override void ConfigureServices(IServiceCollection services)
         {
+            base.ConfigureServices(services);
+
             services.AddTransient<TenantContext>();
             services.AddSingleton<DbConnConfigCache>();
             services.AddTransient<DbConnConfigHelper>();

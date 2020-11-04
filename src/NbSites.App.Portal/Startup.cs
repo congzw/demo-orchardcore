@@ -7,11 +7,10 @@ using NbSites.App.Portal.Data;
 using NbSites.Base.Data;
 using NbSites.Core;
 using NbSites.Core.EFCore;
-using OrchardCore.Modules;
 
 namespace NbSites.App.Portal
 {
-    public class Startup : StartupBase
+    public class Startup : MyAppStartupBase
     {
         private readonly IConfiguration _configuration;
 
@@ -20,16 +19,18 @@ namespace NbSites.App.Portal
             _configuration = configuration;
         }
 
-        public override int Order => StartupOrder.Instance.App;
-
         public override void ConfigureServices(IServiceCollection services)
         {
+            base.ConfigureServices(services);
+
             ModelAssemblyRegistry.Instance.AddModelConfigAssembly(this.GetType().Assembly);
             services.AddScoped<PortalDbContext>(sp => new PortalDbContext(sp.GetRequiredService<BaseDbContext>()));
         }
         
         public override void Configure(IApplicationBuilder builder, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
         {
+            base.Configure(builder, routes, serviceProvider);
+
             routes.MapAreaControllerRoute
             (
                 name: "Portal_Root",

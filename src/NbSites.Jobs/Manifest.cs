@@ -1,11 +1,11 @@
-using OrchardCore.Modules.Manifest;
+﻿using OrchardCore.Modules.Manifest;
 
 [assembly: Module(
-    Name = "NbSites.App.Portal",
+    Name = "NbSites.Jobs",
     Author = "congzw",
     Website = "https://github.com/congzw/demo-orchardcore",
     Version = "0.1.0",
-    Description = "NbSites.App.Portal",
+    Description = "NbSites.Jobs",
     Category = "Demo",
     Dependencies = new string[] { "NbSites.Core" }
 )]

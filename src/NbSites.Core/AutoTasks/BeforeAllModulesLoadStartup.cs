@@ -1,17 +1,17 @@
-﻿using Common;
-using Common.Data;
+﻿using Common.Data;
 using Microsoft.Extensions.DependencyInjection;
-using OrchardCore.Modules;
 
 namespace NbSites.Core.AutoTasks
 {
-    public class BeforeAllModulesLoadStartup : StartupBase
+    public class BeforeAllModulesLoadStartup : MyStartupBase
     {
-        public override int Order => StartupOrder.Instance.BeforeAllModulesLoad;
-
         public override void ConfigureServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
+
+            var startupOrderHelper = StartupOrderHelper.Instance();
+            services.AddSingleton<IStartupOrderHelper>(sp => startupOrderHelper);
+            services.AddSingleton<StartupOrderHelper>(sp => startupOrderHelper as StartupOrderHelper);
 
             var dbContextHelper = DbContextHelper.Instance;
             dbContextHelper.AddSupportSqlServer();

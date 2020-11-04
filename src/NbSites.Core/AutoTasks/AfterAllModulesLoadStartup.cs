@@ -6,11 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NbSites.Core.AutoInject;
-using OrchardCore.Modules;
 
 namespace NbSites.Core.AutoTasks
 {
-    public class AfterAllModulesLoadStartup : StartupBase
+    public class AfterAllModulesLoadStartup : MyStartupBase
     {
         private readonly ILogger<AfterAllModulesLoadStartup> _logger;
         public IConfiguration Configuration { get; }
@@ -20,8 +19,6 @@ namespace NbSites.Core.AutoTasks
             _logger = logger;
             Configuration = configuration;
         }
-
-        public override int Order => StartupOrder.Instance.AfterAllModulesLoad;
 
         public override void ConfigureServices(IServiceCollection services)
         {
@@ -35,6 +32,7 @@ namespace NbSites.Core.AutoTasks
         public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
         {
             base.Configure(app, routes, serviceProvider);
+
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var allTasks = scope.ServiceProvider

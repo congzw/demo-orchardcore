@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NbSites.Base.Data;
+using NbSites.Core;
 using NbSites.Core.AutoInject;
 using NbSites.Core.AutoTasks;
-using NbSites.Core.Data;
 using OrchardCore.Environment.Shell;
 
 namespace NbSites.Base.Api
@@ -49,7 +48,13 @@ namespace NbSites.Base.Api
             var autoRegisterServiceCache = autoInjectRegistry.Cache;
             return autoRegisterServiceCache.ToClassTypeInfos();
         }
-        
+
+        [HttpGet]
+        public IStartupOrderHelper GetStartupOrderHelper()
+        {
+            return StartupOrderHelper.Instance();
+        }
+
         [HttpGet]
         public ShellSettings GetShellSettings([FromServices] IServiceProvider sp)
         {

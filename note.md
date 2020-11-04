@@ -18,8 +18,19 @@ NbSites.ApiDoc
 NbSites.App.Portal
 NbSites.App.Setup
 NbSites.Base
+NbSites.Jobs -1
+NbSites.Core -2
 
 # order from small to big
-Before -> Base -> App -> After
+Before -> Basic -> App -> After
 
 ```
+
+经测试：
+
+- Manifest.cs的Dependencies影响的是构造函数Ctor()
+- Startup.cs的Order影响的是ConfigureServices()
+- Startup.cs的ConfigureOrder影响的是Configure()
+
+
+

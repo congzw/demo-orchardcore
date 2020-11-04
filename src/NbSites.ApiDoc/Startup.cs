@@ -7,16 +7,13 @@ using Microsoft.Extensions.Logging;
 using NbSites.ApiDoc.Boots;
 using NbSites.Core;
 using NbSites.Core.ApiDoc;
-using OrchardCore.Modules;
 
 namespace NbSites.ApiDoc
 {
-    public class Startup : StartupBase
+    public class Startup : MyStartupBase
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<Startup> _logger;
-
-        public override int Order => StartupOrder.Instance.AfterAllModulesLoad + 1;
         
         public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
@@ -26,6 +23,8 @@ namespace NbSites.ApiDoc
         
         public override void ConfigureServices(IServiceCollection services)
         {
+            base.ConfigureServices(services);
+
             services.AddSingleton<ApiDocInfoRegistry>();
             using (var scope = services.BuildServiceProvider().CreateScope())
             {
@@ -37,6 +36,8 @@ namespace NbSites.ApiDoc
         
         public override void Configure(IApplicationBuilder builder, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
         {
+            base.Configure(builder, routes, serviceProvider);
+
             var apiDocInfoRegistry = serviceProvider.GetRequiredService<ApiDocInfoRegistry>();
             builder.UseApiDoc(apiDocInfoRegistry);
 
