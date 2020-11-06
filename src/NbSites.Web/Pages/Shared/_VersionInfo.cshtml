@@ -1,0 +1,37 @@
+﻿@using NbSites.VersionInfos
+@inject VersionInfo Info
+@{
+    var changeLogs = Info.ChangeLogs.OrderByDescending(x => x.CompletedAt).ToList();
+    var infoArtifactInfo = Info.ArtifactInfo;
+}
+<div>
+    <h2>开发版本:@Info.CurrentVersion (@Info.LastUpdateAt.ToString("yyyy-MM-dd"))</h2>
+    @if (infoArtifactInfo != null)
+    {
+        <h3>制品信息</h3>
+        <p>制品编号:@infoArtifactInfo.ArtifactId</p>
+        <p>来源分支:@infoArtifactInfo.Branch</p>
+        <p>运行环境:@infoArtifactInfo.Runtime</p>
+        <p>制品来源:@infoArtifactInfo.SaveLocation</p>
+        <p>备注信息:@infoArtifactInfo.Description</p>
+    }
+    <hr />
+    <ul>
+        @foreach (var changeLog in changeLogs)
+        {
+            <li>
+                <p>@changeLog.CompletedAt.ToString("yyyy-MM-dd"), @changeLog.SinceVersion.ToString(), @changeLog.Title</p>
+                @if (!string.IsNullOrWhiteSpace(changeLog.Description))
+                {
+                    <p>备注：@changeLog.Description</p>
+                }
+                <ul>
+                    @foreach (var item in changeLog.Items)
+                    {
+                        <li>@item</li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+</div>

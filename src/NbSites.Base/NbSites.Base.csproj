@@ -25,6 +25,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Common\Common.csproj" />
 		<ProjectReference Include="..\NbSites.Core\NbSites.Core.csproj" />
+		<ProjectReference Include="..\NbSites.VersionInfos\NbSites.VersionInfos.csproj" />
 	</ItemGroup>
 
 </Project>

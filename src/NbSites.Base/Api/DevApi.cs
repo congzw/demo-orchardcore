@@ -9,6 +9,7 @@ using NbSites.Base.Data;
 using NbSites.Core;
 using NbSites.Core.AutoInject;
 using NbSites.Core.AutoTasks;
+using NbSites.VersionInfos;
 using OrchardCore.Environment.Shell;
 
 namespace NbSites.Base.Api
@@ -40,14 +41,14 @@ namespace NbSites.Base.Api
         [HttpGet]
         public string DataSeed([FromServices] IEnumerable<IAfterAllModulesLoadTask> afterAllModulesLoadTasks)
         {
-            var dataSeedTasks  = afterAllModulesLoadTasks.Where(x => x.Category == "DataSeed").OrderBy(x => x.Order).ToList();
+            var dataSeedTasks = afterAllModulesLoadTasks.Where(x => x.Category == "DataSeed").OrderBy(x => x.Order).ToList();
             foreach (var dataSeedTask in dataSeedTasks)
             {
                 dataSeedTask.Run();
             }
             return string.Join(',', dataSeedTasks.Select(x => x.GetType().Name));
         }
-        
+
         [HttpGet]
         public IList<ClassTypeInfo> GetAutoInjects([FromServices] AutoInjectRegistry autoInjectRegistry)
         {
@@ -59,6 +60,12 @@ namespace NbSites.Base.Api
         public IStartupOrderHelper GetStartupOrderHelper()
         {
             return StartupOrderHelper.Instance();
+        }
+
+        [HttpGet]
+        public VersionInfo GetVersionInfo([FromServices] VersionInfo versionInfo)
+        {
+            return versionInfo;
         }
 
         [HttpGet]

@@ -40,6 +40,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 build", "02 build", "{13
 		nuget.config = nuget.config
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NbSites.VersionInfos", "NbSites.VersionInfos\NbSites.VersionInfos.csproj", "{591364A5-54F6-43FC-A22E-CF2E843F3A7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{C3050D99-EED4-474B-87BF-866AC1521D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3050D99-EED4-474B-87BF-866AC1521D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3050D99-EED4-474B-87BF-866AC1521D14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{591364A5-54F6-43FC-A22E-CF2E843F3A7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{591364A5-54F6-43FC-A22E-CF2E843F3A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{591364A5-54F6-43FC-A22E-CF2E843F3A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{591364A5-54F6-43FC-A22E-CF2E843F3A7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{8B18F6E4-1747-46F0-9D3D-3AFA0BD49B65} = {209091F1-3997-4E4E-8571-92064829457B}
 		{B386EC71-B2BF-47D8-8E18-5935EE2EBA23} = {B4770611-9E1C-467B-B05E-BB117E1038F6}
 		{C3050D99-EED4-474B-87BF-866AC1521D14} = {B4770611-9E1C-467B-B05E-BB117E1038F6}
+		{591364A5-54F6-43FC-A22E-CF2E843F3A7C} = {32765A59-3918-4C2D-8119-692829657E56}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27FBA4EE-4F74-4E91-BD9C-7C13B151923A}

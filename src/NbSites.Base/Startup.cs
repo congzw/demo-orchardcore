@@ -8,6 +8,7 @@ using NbSites.Base.Data;
 using NbSites.Core;
 using NbSites.Core.Data;
 using NbSites.Core.EFCore;
+using NbSites.VersionInfos;
 
 namespace NbSites.Base
 {
@@ -23,11 +24,17 @@ namespace NbSites.Base
         public override void ConfigureServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
-            
+            ModelAssemblyRegistry.Instance.AddModelConfigAssembly(this.GetType().Assembly);
+
+            var versionInfoHelper = VersionInfoHelper.Instance();
+            services.AddSingleton<IVersionInfoHelper>(sp => versionInfoHelper);
+            services.AddSingleton<VersionInfoHelper>(sp => versionInfoHelper as VersionInfoHelper);
+            var versionInfo = versionInfoHelper.GetVersionInfo();
+            services.AddSingleton(sp => versionInfo);
+
             services.AddOptions<DevSetting>().Bind(Configuration.GetSection("DevSetting"));
             services.AddScoped(sp => sp.GetService<IOptionsSnapshot<DevSetting>>().Value);
 
-            ModelAssemblyRegistry.Instance.AddModelConfigAssembly(this.GetType().Assembly);
             services.AddDbContext<BaseDbContext>(async (sp, optionsBuilder) =>
             {
                 var dbContextHelper = sp.GetRequiredService<DbContextHelper>();
