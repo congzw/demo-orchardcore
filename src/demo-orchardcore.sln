@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NbSites.Web", "NbSites.Web\NbSites.Web.csproj", "{EDA7723C-953F-4997-ACCE-E8A1029451A3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{314E77F7-8AAF-4B7A-BC7E-46A970E1D8DC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 doc", "01 doc", "{314E77F7-8AAF-4B7A-BC7E-46A970E1D8DC}"
 	ProjectSection(SolutionItems) = preProject
 		..\note.md = ..\note.md
 		..\readme.md = ..\readme.md
@@ -29,7 +29,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NbSites.App.Portal", "NbSit
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrations", "Migrations", "{209091F1-3997-4E4E-8571-92064829457B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NbSites.Jobs", "NbSites.Jobs\NbSites.Jobs.csproj", "{C3050D99-EED4-474B-87BF-866AC1521D14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NbSites.Jobs", "NbSites.Jobs\NbSites.Jobs.csproj", "{C3050D99-EED4-474B-87BF-866AC1521D14}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 build", "02 build", "{13B00695-D365-433F-96BB-BE0895958262}"
+	ProjectSection(SolutionItems) = preProject
+		..\build\build_linux_x64.bat = ..\build\build_linux_x64.bat
+		..\build\build_win_x64.bat = ..\build\build_win_x64.bat
+		..\build\ci_run_unit_test.bat = ..\build\ci_run_unit_test.bat
+		..\build\ci_update_nuget_cache.bat = ..\build\ci_update_nuget_cache.bat
+		nuget.config = nuget.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

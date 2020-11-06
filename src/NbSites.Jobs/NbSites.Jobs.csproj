@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<DocumentationFile>NbSites.Jobs.xml</DocumentationFile>
 		<NoWarn>1701;1702;1591</NoWarn>
