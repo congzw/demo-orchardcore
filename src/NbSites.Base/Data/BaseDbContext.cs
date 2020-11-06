@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NbSites.Base.Data.Products;
+using NbSites.Core.Data;
 using NbSites.Core.EFCore;
 
 namespace NbSites.Base.Data
@@ -12,15 +13,16 @@ namespace NbSites.Base.Data
 
         public DbSet<Product> Products { get; set; }
         
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(modelBuilder);
 
             var modelConfigAssemblies = ModelAssemblyRegistry.Instance.Assemblies;
             foreach (var modelConfigAssembly in modelConfigAssemblies)
             {
-                builder.ApplyConfigurationsFromAssembly(modelConfigAssembly);
+                modelBuilder.ApplyConfigurationsFromAssembly(modelConfigAssembly);
             }
+            modelBuilder.ApplyAutoLength();
         }
     }
 }
