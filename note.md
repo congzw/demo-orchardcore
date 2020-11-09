@@ -32,5 +32,7 @@ Before -> Basic -> App -> After
 - Startup.cs的Order影响的是ConfigureServices()
 - Startup.cs的ConfigureOrder影响的是Configure()
 
+## build scripts
 
+增加手动脚本的参数，启用开发相关设置（例如异常页面等）： /p:EnvironmentName=Development
 
